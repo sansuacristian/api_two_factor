@@ -5,7 +5,7 @@ import (
 
 	"github.com/personal/api_two_factor/src/api/controller/codeGeneratorController"
 	"github.com/personal/api_two_factor/src/api/controller/pingController"
-	"github.com/personal/api_two_factor/src/api/services"
+	a "github.com/personal/api_two_factor/src/api/services/codeGeneratorServices"
 )
 
 //GeneratorController se usa para utilizar los metodos de las capas inferiores
@@ -15,7 +15,8 @@ type GeneratorController struct {
 
 //BuildApplication ...
 func BuildApplication() *GeneratorController {
-	servicio := services.NewCodeServices()
+
+	servicio := a.NewCodeServices()
 	return &GeneratorController{code: codeGeneratorController.NewCodeController(servicio)}
 
 }
@@ -26,7 +27,8 @@ func URLMapping(g *GeneratorController) *gin.Engine {
 	router := gin.Default()
 	mainRouter := router.Group("/")
 	mainRouter.GET("/ping", pingController.Ping)
-	mainRouter.GET("codeGenerator", g.code.CodeGenerator)
+	mainRouter.GET("/codeGenerator", g.code.CodeGenerator)
+	mainRouter.POST("/codeValidator", g.code.CodeValidator)
 
 	return router
 }
