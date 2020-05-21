@@ -77,7 +77,7 @@ func (c *codeGeneratorServices) Code() (string, error) {
 func (c *codeGeneratorServices) Validation(userToken models.Token) (string, error) {
 
 	if token != userToken.Token {
-		return "", errors.New(" El token no coincide por favor intente de nuevo")
+		return "El token no coincide intente de nuevo por favor ", errors.New(" bad token")
 	}
 	return "Token validado exitosamente continue con su compra", nil
 }
